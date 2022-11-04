@@ -1,13 +1,13 @@
-# Exp-06-Configuration-of-ADC-for-converting-analog-to-digital-signals
+# Exp 06 Configuration of ADC for converting analog to digital signals
+```
+Name :	SUDHARSHNA LAKSHMI S
+Roll no: 212221230110
 
-
-## Name :	
-## Roll no:
-## Date of experiment : 
-  
-  
-## Aim: To configure internal ADC for   LPC2148 ARM 7 and write a code for displaying the values varying from 0v to 3.3v to its equivalent digital values 
-## Components required: Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
+```  
+## Aim
+To configure internal ADC for   LPC2148 ARM 7 and write a code for displaying the values varying from 0v to 3.3v to its equivalent digital values 
+## Components required
+Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
  
  ![image](https://user-images.githubusercontent.com/36288975/198947663-2d75f694-880a-4bc0-be67-8c2d4125fdb6.png)
 
@@ -176,8 +176,6 @@ ADxDRy. E.g. AD0DR1 contains ADC result of channel 1 of ADC0.
 
 Figure -08 Circuit diagram of interfacing an POT with ADC input pin 
 
-## Kiel - Program 
- 
 ## Tabulations and graph 
 SL NO	% OF POT VALUE	ADC VALUE
 1		
@@ -192,17 +190,71 @@ SL NO	% OF POT VALUE	ADC VALUE
 10		
 
  ![image](https://user-images.githubusercontent.com/36288975/198947184-dbccf4b1-10a1-4090-a670-93526ed6e597.png)
+ Figure -09 graph between % of pot(1Kohm) values and ADC 
+
+ ## Kiel - Program 
+```
+#include <lpc214x.h>            //Header file for LPC214x Series microcontrollers
+
+void delay(int );              //Function declaration for delay
+
+int i;                         //Variable declared as integer
+
+unsigned int a[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90}; //integer array with numbers for display
+
+int main()
+
+{ 
+
+    IO0DIR=0xffffffff;              //Sets direction as output for PORT 0 pins
+
+    while(1)
+
+    {
+
+        for(i=0;i<=9;i++)
+
+        {
+
+            IO0SET=a[i];           //sets corresponding pins HIGH
+
+            delay(9000);                  //Calls delay function
+
+            IO0CLR=a[i];           //Sets corresponding pins LOW
+
+        }
+
+    }
+
+    return 0;
+
+}
 
 
+void delay(int k)              //Function for making delay
 
- 
-Figure -09 graph between % of pot(1Kohm) values and ADC 
+{
+
+    int i,j;
+
+    for(i=0;i<k;i++)
+
+    for(j=0;j<=1000;j++);
+
+}
+```
+## Output
+
+### Before
+![out](./1.png)
+
+### After
+![out](./2.png)
+
+## Result 
+Configuring an ADC and the input values are displayed on LCD screen.
 
 
-Result :
-Configuring an ADC and the input values are displayed on LCD screen 
-
-Output screen shots :
 
 
 
