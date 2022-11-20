@@ -176,80 +176,47 @@ ADxDRy. E.g. AD0DR1 contains ADC result of channel 1 of ADC0.
 
 Figure -08 Circuit diagram of interfacing an POT with ADC input pin 
 
-## Tabulations and graph 
-SL NO	% OF POT VALUE	ADC VALUE
-1		
-2		
-3		
-4		
-5		
-6		
-7		
-8		
-9		
-10		
-
- ![image](https://user-images.githubusercontent.com/36288975/198947184-dbccf4b1-10a1-4090-a670-93526ed6e597.png)
- Figure -09 graph between % of pot(1Kohm) values and ADC 
-
  ## Kiel - Program 
 ```
-#include <lpc214x.h>            //Header file for LPC214x Series microcontrollers
+#include<lpc214x.h>
+#include "LCD.h"
+#include "ADC.h"
 
-void delay(int );              //Function declaration for delay
-
-int i;                         //Variable declared as integer
-
-unsigned int a[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90}; //integer array with numbers for display
+unsigned int val;
 
 int main()
-
-{ 
-
-    IO0DIR=0xffffffff;              //Sets direction as output for PORT 0 pins
-
-    while(1)
-
-    {
-
-        for(i=0;i<=9;i++)
-
-        {
-
-            IO0SET=a[i];           //sets corresponding pins HIGH
-
-            delay(9000);                  //Calls delay function
-
-            IO0CLR=a[i];           //Sets corresponding pins LOW
-
-        }
-
-    }
-
-    return 0;
-
-}
-
-
-void delay(int k)              //Function for making delay
-
 {
-
-    int i,j;
-
-    for(i=0;i<k;i++)
-
-    for(j=0;j<=1000;j++);
-
+	IO1DIR=0xffffffff;
+	IO0DIR=0x00000000;
+	PINSEL0=0x0300;
+	VPBDIV=0x02;
+	lcd_init();
+	show("ADC Value : ");
+	while(1) {
+		cmd(0x8b);
+		val=adc(0,6);
+		dat((val/1000)+48);
+		dat(((val/100)%10)+48);
+		dat(((val/10)%10)+48);
+		dat((val%10)+48);
+	}
 }
 ```
+## Tabulations and graph 
+![ou](4.png)
+
+![ou](5.png)
+
 ## Output
 
 ### Before
-![out](./1.png)
+![out](1.png)
 
 ### After
-![out](./2.png)
+![out](2.png)
+
+### Circuit Diagram
+![ou](3.png)
 
 ## Result 
 Configuring an ADC and the input values are displayed on LCD screen.
